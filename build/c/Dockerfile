@@ -64,6 +64,8 @@ ENV CCACHE_TEMPDIR=/tmp/.ccache-temp
 ENV CCACHE_COMPRESS=1
 ENV CCACHE_DIR=$HOME/.ccache
 
+WORKDIR /depends
+
 RUN make -j${THREADS} HOST=${BUILD}
 
 FROM scratch as export-image
