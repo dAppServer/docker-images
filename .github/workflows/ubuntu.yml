@@ -5,19 +5,17 @@ on:
   push:
     branches:
       - main
+      - 2-cc-cache-images
     paths:
       - '.github/workflows/ubuntu.yml'
       - 'os/ubuntu/Dockerfile'
-    paths-ignore:
-      - '**.md'
   pull_request:
     branches:
       - main
+      - 2-cc-cache-images
     paths:
       - '.github/workflows/ubuntu.yml'
       - 'os/ubuntu/Dockerfile'
-    paths-ignore:
-      - '**.md'
 jobs:
   build:
     runs-on: ubuntu-latest
