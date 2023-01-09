@@ -21,7 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [ 16.04, 18.04, 20.04, 22.04 ]
+        version: [ 18.04, 20.04, 22.04 ]
+        build: [ x86_64-w64-mingw32, i686-w64-mingw32, x86_64-unknown-linux-gnu, i686-pc-linux-gnu, arm-linux-gnueabihf, aarch64-linux-gnu, riscv64-linux-gnu, x86_64-unknown-freebsd]
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.9.1
@@ -53,20 +54,26 @@ jobs:
         with:
           context: .
           file: build/c/Dockerfile
-          build-args: VERSION=ubuntu:${{ matrix.version }}
-          cache-to: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
-          cache-from: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+          build-args: |
+            VERSION=ubuntu:${{ matrix.version }}
+            BUILD=${{ matrix.build }}
+            THREADS=2
+          cache-to: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}-depends-${{ matrix.build }}
+          cache-from: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}-depends-${{ matrix.build }}
           push: true
-          tags: lthn/build-c:ubuntu-${{ matrix.version }},ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+          tags: lthn/build-c:ubuntu-${{ matrix.version }}-depends-${{ matrix.build }},ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}-depends-${{ matrix.build }}
       - name: Docker Build
         if: ${{ github.event_name == 'pull_request' }}
         uses: docker/build-push-action@v3
         with:
           context: .
           file: build/c/Dockerfile
-          build-args: VERSION=ubuntu:${{ matrix.version }}
-          cache-to: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
-          cache-from: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+          build-args: |
+            VERSION=ubuntu:${{ matrix.version }}
+            BUILD=${{ matrix.build }}
+            THREADS=2
+          cache-to: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}-depends-${{ matrix.build }}
+          cache-from: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}-depends-${{ matrix.build }}
           push: false
-          tags: lthn/build-c:ubuntu-${{ matrix.version }},ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+          tags: lthn/build-c:ubuntu-${{ matrix.version }}-depends-${{ matrix.build }},ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}-depends-${{ matrix.build }}
 
