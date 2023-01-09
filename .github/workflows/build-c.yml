@@ -1,0 +1,72 @@
+name: build-c
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 2-cc-cache-images
+    paths:
+      - '.github/workflows/build-c.yml'
+      - 'build/c/Dockerfile'
+  pull_request:
+    branches:
+      - main
+      - 2-cc-cache-images
+    paths:
+      - '.github/workflows/build-c.yml'
+      - 'build/c/Dockerfile'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [ 16.04, 18.04, 20.04, 22.04 ]
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          install: true
+      - name: Login to GitHub Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Docker Build
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: os/ubuntu/Dockerfile
+          build-args: VERSION=ubuntu:${{ matrix.version }}
+          cache-to: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+          cache-from: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+          push: true
+          tags: lthn/build-c:ubuntu-${{ matrix.version }},ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+      - name: Docker Build
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: os/ubuntu/Dockerfile
+          build-args: VERSION=ubuntu:${{ matrix.version }}
+          cache-to: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+          cache-from: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+          push: false
+          tags: lthn/build-c:ubuntu-${{ matrix.version }},ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
+
