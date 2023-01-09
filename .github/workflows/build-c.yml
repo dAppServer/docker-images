@@ -52,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: os/ubuntu/Dockerfile
+          file: build/c/Dockerfile
           build-args: VERSION=ubuntu:${{ matrix.version }}
           cache-to: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
           cache-from: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
@@ -63,7 +63,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: os/ubuntu/Dockerfile
+          file: build/c/Dockerfile
           build-args: VERSION=ubuntu:${{ matrix.version }}
           cache-to: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
           cache-from: ghcr.io/dappserver/build-c:ubuntu-${{ matrix.version }}
