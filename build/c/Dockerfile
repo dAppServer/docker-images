@@ -64,7 +64,7 @@ ENV CCACHE_TEMPDIR=/tmp/.ccache-temp
 ENV CCACHE_COMPRESS=1
 ENV CCACHE_DIR=$HOME/.ccache
 
-RUN make -j${THREADS} -C ${BUILD_PATH} HOST=${BUILD}
+RUN make -j${THREADS} HOST=${BUILD}
 
 FROM scratch as export-image
 COPY --from=build /depends/built /built
