@@ -2,15 +2,34 @@
 
 ## Available Tags
 
-`lthn/ubuntu:16.04`, `lthn/ubuntu:18.04`,`lthn/ubuntu:20.04`,`lthn/ubuntu:22.04`
+`lthn/build-c:ubuntu-16.04`, `lthn/build-c:ubuntu-18.04`,`lthn/build-c:ubuntu-20.04`,`lthn/build-c:ubuntu-22.04`
 
 ## Installed Packages
 
-- wget
-- build-essential
-- curl
-- git
-- wget
+- all from `lthn/ubuntu:${VERSION}`
+- make
+- automake
+- cmake
+- g++-multilib
+- libtool
+- binutils
+- bsdmainutils
+- pkg-config
+- python3
+- patch
+- bison 
+- g++-arm-linux-gnueabihf
+- binutils-arm-linux-gnueabihf
+- g++-aarch64-linux-gnu
+- binutils-aarch64-linux-gnu
+- g++-powerpc64-linux-gnu
+- binutils-powerpc64-linux-gnu
+- g++-powerpc64le-linux-gnu
+- binutils-powerpc64le-linux-gnu 
+- g++-riscv64-linux-gnu
+- binutils-riscv64-linux-gnu
+- g++-s390x-linux-gnu
+- binutils-s390x-linux-gnu
 
 ## Configuration Adjustments
 
