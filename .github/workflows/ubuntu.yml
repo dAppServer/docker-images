@@ -53,7 +53,7 @@ jobs:
         with:
           context: .
           file: os/ubuntu/Dockerfile
-          build-args: VERSION=ubuntu:${{ matrix.version }}
+          build-args: VERSION=${{ matrix.version }}
           cache-to: ghcr.io/dappserver/ubuntu:${{ matrix.version }}
           cache-from: ghcr.io/dappserver/ubuntu:${{ matrix.version }}
           push: true
@@ -64,7 +64,7 @@ jobs:
         with:
           context: .
           file: os/ubuntu/Dockerfile
-          build-args: VERSION=ubuntu:${{ matrix.version }}
+          build-args: VERSION=${{ matrix.version }}
           cache-to: ghcr.io/dappserver/ubuntu:${{ matrix.version }}
           cache-from: ghcr.io/dappserver/ubuntu:${{ matrix.version }}
           push: false
