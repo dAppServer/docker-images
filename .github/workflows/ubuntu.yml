@@ -54,10 +54,10 @@ jobs:
           context: .
           file: os/ubuntu/Dockerfile
           build-args: VERSION=${{ matrix.version }}
-          cache-to: ghcr.io/dappserver/ubuntu:${{ matrix.version }}
-          cache-from: ghcr.io/dappserver/ubuntu:${{ matrix.version }}
+          cache-to: ghcr.io/dappserver/ubuntu-build:${{ matrix.version }}
+          cache-from: ghcr.io/dappserver/ubuntu-build:${{ matrix.version }}
           push: true
-          tags: lthn/ubuntu:${{ matrix.version }},ghcr.io/dappserver/ubuntu:${{ matrix.version }}
+          tags: lthn/ubuntu-build:${{ matrix.version }},ghcr.io/dappserver/ubuntu-build:${{ matrix.version }}
       - name: Docker Build
         if: ${{ github.event_name == 'pull_request' }}
         uses: docker/build-push-action@v3
@@ -65,8 +65,8 @@ jobs:
           context: .
           file: os/ubuntu/Dockerfile
           build-args: VERSION=${{ matrix.version }}
-          cache-to: ghcr.io/dappserver/ubuntu:${{ matrix.version }}
-          cache-from: ghcr.io/dappserver/ubuntu:${{ matrix.version }}
+          cache-to: ghcr.io/dappserver/ubuntu-build:${{ matrix.version }}
+          cache-from: ghcr.io/dappserver/ubuntu-build:${{ matrix.version }}
           push: false
-          tags: lthn/ubuntu:${{ matrix.version }},ghcr.io/dappserver/ubuntu:${{ matrix.version }}
+          tags: lthn/ubuntu-build:${{ matrix.version }},ghcr.io/dappserver/ubuntu-build:${{ matrix.version }}
 
