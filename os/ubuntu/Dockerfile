@@ -22,3 +22,6 @@ RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get install -y build-essential curl git wget libssl-dev liblzo2-dev libpam0g-dev build-essential autoconf \
                       liblz4-dev libtool pkg-config libcap-ng-dev
+
+# Make Lethean bin dir
+RUN mkdir -p /home/lthn/bin
