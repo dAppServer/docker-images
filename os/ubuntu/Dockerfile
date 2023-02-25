@@ -3,6 +3,9 @@ FROM ubuntu:${VERSION}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Add Image Authors
+LABEL org.opencontainers.image.authors="snider@lethean.io"
+
 RUN set -xe \
     && echo '#!/bin/sh' > /usr/sbin/policy-rc.d\
     && echo 'exit 101' >> /usr/sbin/policy-rc.d\
